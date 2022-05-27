@@ -67,7 +67,7 @@ async function run() {
             const query = {};
             const cursor = reviewsCollection.find(query);
             const reviews = await cursor.toArray();
-            res.send(reviews);
+            res.send(reviews.reverse());
         });
 
 
