@@ -55,12 +55,12 @@ async function run() {
             res.send({ accessToken });
         });
 
-        // get all items data from database and send to client side
-        app.get('/inventory', async (req, res) => {
+        // get all trims data from database and send to client side
+        app.get('/trims', async (req, res) => {
             const query = {};
-            const cursor = itemCollection.find(query);
-            const items = await cursor.toArray();
-            res.send(items);
+            const cursor = trimsCollection.find(query);
+            const trims = await cursor.toArray();
+            res.send(trims);
         });
         // get all requested items from database and send to client side
         app.get('/requested', async (req, res) => {
