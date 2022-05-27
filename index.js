@@ -62,6 +62,26 @@ async function run() {
             const trims = await cursor.toArray();
             res.send(trims);
         });
+        // get all reviews data from database and send to client side
+        app.get('/reviews', async (req, res) => {
+            const query = {};
+            const cursor = reviewsCollection.find(query);
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+        // old code for reference
         // get all requested items from database and send to client side
         app.get('/requested', async (req, res) => {
             const query = {};
