@@ -39,6 +39,7 @@ async function run() {
         await client.connect();
         const trimsCollection = client.db('accessories').collection('trims');
         const reviewsCollection = client.db('accessories').collection('reviews');
+        const orderCollection = client.db('accessories').collection('orders');
         console.log('db connected');
 
         // login authorization (JWT)
@@ -57,7 +58,7 @@ async function run() {
             const trims = await cursor.toArray();
             res.send(trims);
         });
-        //get id-wise item  from database and send to client side for stock item info
+        //get id-wise item  from database and send to client side for purchase page
         app.get('/trims/:id', async (req, res) => {
             const idParams = req.params.id;
             const query = { _id: ObjectId(idParams) };
@@ -71,6 +72,12 @@ async function run() {
             const cursor = reviewsCollection.find(query);
             const reviews = await cursor.toArray();
             res.send(reviews.reverse());
+        });
+        // receive order request from client side in the purchase page , save into DB and then send response
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.send(result);
         });
 
 
