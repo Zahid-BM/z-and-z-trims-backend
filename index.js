@@ -39,14 +39,9 @@ async function run() {
         await client.connect();
         const trimsCollection = client.db('accessories').collection('trims');
         const reviewsCollection = client.db('accessories').collection('reviews');
-
-        // old code
-        /*     const addCollection = client.db('warehouse').collection('add');
-            const requestedCollection = client.db('warehouse').collection('requested');
-            const reportCollection = client.db('warehouse').collection('report'); */
         console.log('db connected');
 
-        // authentication (JWT)
+        // login authorization (JWT)
         app.post('/login', async (req, res) => {
             const user = req.body;
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
