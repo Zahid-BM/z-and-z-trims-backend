@@ -57,6 +57,14 @@ async function run() {
             const trims = await cursor.toArray();
             res.send(trims);
         });
+        //get id-wise item  from database and send to client side for stock item info
+        app.get('/trims/:id', async (req, res) => {
+            const idParams = req.params.id;
+            const query = { _id: ObjectId(idParams) };
+            const item = await trimsCollection.findOne(query);
+            res.send(item);
+
+        });
         // get all reviews data from database and send to client side
         app.get('/reviews', async (req, res) => {
             const query = {};
