@@ -93,6 +93,13 @@ async function run() {
                 res.status(403).send({ message: 'Forbidden access' })
             }
         });
+        // get order id-wise and delete on cancel button clicked from my order page in dashboard
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await orderCollection.deleteOne(query);
+            res.send(result);
+        });
 
 
 
