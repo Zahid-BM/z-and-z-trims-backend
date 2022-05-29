@@ -79,6 +79,28 @@ async function run() {
             const result = await orderCollection.insertOne(order);
             res.send(result);
         });
+        //  verify JWT and email-wise order find and send to client
+        app.get('/orders', verifyJWT, async (req, res) => {
+            const decodedEmail = req.decoded.email;
+            const email = req.query.email;
+            if (email === decodedEmail) {
+                const query = { email: email };
+                const cursor = orderCollection.find(query);
+                const orders = await cursor.toArray();
+                res.send(orders);
+            }
+            else {
+                res.status(403).send({ message: 'Forbidden access' })
+            }
+        });
+
+
+
+
+
+
+
+
 
 
 
