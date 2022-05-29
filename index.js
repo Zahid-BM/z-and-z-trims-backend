@@ -40,6 +40,7 @@ async function run() {
         const trimsCollection = client.db('accessories').collection('trims');
         const reviewsCollection = client.db('accessories').collection('reviews');
         const orderCollection = client.db('accessories').collection('orders');
+        const profileCollection = client.db('accessories').collection('profile');
         console.log('db connected');
 
         // login authorization (JWT)
@@ -105,6 +106,12 @@ async function run() {
             const review = req.body;
             const result = await reviewsCollection.insertOne(review);
             res.send(result);
+        });
+        // receive review request from client side in the add a review page , save into DB and then send response
+        app.post('/profile', async (req, res) => {
+            const profile = req.body;
+            const newProfile = await profileCollection.insertOne(profile);
+            res.send(newProfile);
         });
 
 
