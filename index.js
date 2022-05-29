@@ -107,114 +107,19 @@ async function run() {
             const result = await reviewsCollection.insertOne(review);
             res.send(result);
         });
-        // receive review request from client side in the add a review page , save into DB and then send response
-        app.post('/profile', async (req, res) => {
+        // receive profile creation or update request from client side in the my profile page , save into DB and then send response
+        app.put('/profile/:email', async (req, res) => {
+            const email = req.params.email;
             const profile = req.body;
-            const newProfile = await profileCollection.insertOne(profile);
+            const filter = { email: email };
+            const option = { upsert: true };
+            const updateDoc = {
+                $set: profile,
+            };
+            const newProfile = await profileCollection.updateOne(filter, updateDoc, option)
             res.send(newProfile);
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // old code for reference
-        // get all requested items from database and send to client side
-        app.get('/requested', async (req, res) => {
-            const query = {};
-            const cursor = requestedCollection.find(query);
-            const items = await cursor.toArray();
-            res.send(items);
-        });
-        //get inventory data from database and send to client side
-        app.get('/report', async (req, res) => {
-            const query = {};
-            const cursor = reportCollection.find(query);
-            const reports = await cursor.toArray();
-            res.send(reports);
-        });
-        //get id-wise item  from database and send to client side for stock item info
-        app.get('/inventory/:id', async (req, res) => {
-            const idParams = req.params.id;
-            const query = { _id: ObjectId(idParams) };
-            const inventory = await itemCollection.findOne(query);
-            res.send(inventory);
-
-        });
-
-        // receive PUT request from client side to decrease by one qtty and send response to show decreased qtty on client side UI after delivery and increase qtty after adding input and send response to show increased qtty on client side UI after restock item
-        app.put('/inventory/:id', async (req, res) => {
-            const id = req.params.id;
-            const item = req.body;
-            const filter = { _id: ObjectId(id) }
-            const options = { upsert: true };
-            const updateDoc = {
-                $set: {
-                    quantity: parseInt(item.updatedQtty),
-                }
-            };
-            const result = await itemCollection.updateOne(filter, updateDoc, options);
-            res.send(result);
-        });
-
-        // get item id-wise and delete on remove button clicked from my items page
-        app.delete('/add/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await addCollection.deleteOne(query);
-            res.send(result);
-        });
-        // get item id-wise and delete on remove button clicked from manage inventories page
-        app.delete('/inventory/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await itemCollection.deleteOne(query);
-            res.send(result);
-        });
-        // receive new item add request from client side in the request item page
-        app.post('/requested', async (req, res) => {
-            const requestedItem = req.body;
-            const result = await requestedCollection.insertOne(requestedItem);
-            res.send(result);
-        });
-
-        // receive new item add request from client side to save in the data base and then send to client side again
-        app.post('/add', async (req, res) => {
-            const newItem = req.body;
-            const result = await addCollection.insertOne(newItem);
-            res.send(result);
-        });
-
-        // verify JWT and email-wise item find and send to client
-        app.get('/add', verifyJWT, async (req, res) => {
-            const decodedEmail = req.decoded.email;
-            const email = req.query.email;
-            if (email === decodedEmail) {
-                const query = { email: email };
-                const cursor = addCollection.find(query);
-                const myItems = await cursor.toArray();
-                res.send(myItems);
-            }
-            else {
-                res.status(403).send({ message: 'Forbidden access' })
-            }
-
-        });
     }
     finally {
 
