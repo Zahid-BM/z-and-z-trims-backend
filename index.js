@@ -100,6 +100,12 @@ async function run() {
             const result = await orderCollection.deleteOne(query);
             res.send(result);
         });
+        // receive review request from client side in the add a review page , save into DB and then send response
+        app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            const result = await reviewsCollection.insertOne(review);
+            res.send(result);
+        });
 
 
 
