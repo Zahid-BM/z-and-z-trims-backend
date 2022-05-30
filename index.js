@@ -124,6 +124,16 @@ async function run() {
             res.send(allProfiles);
 
         });
+        // add admin API
+        app.put('/profiles/admin/:email', async (req, res) => {
+            const email = req.params.email;
+            const filter = { email: email };
+            const updateDoc = {
+                $set: { role: 'admin' },
+            };
+            const result = await profileCollection.updateOne(filter, updateDoc)
+            res.send(result);
+        });
 
 
 
