@@ -155,6 +155,11 @@ async function run() {
             const result = await profileCollection.deleteOne(query);
             res.send(result);
         });
+        // get all profiles from DB and send to client side make admin dashboard page
+        app.get('/allOrders', verifyJWT, async (req, res) => {
+            const totalOrders = await orderCollection.find().toArray();
+            res.send(totalOrders);
+        });
 
 
 
