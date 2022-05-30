@@ -125,7 +125,7 @@ async function run() {
 
         });
         // add admin API
-        app.put('/profiles/admin/:email', async (req, res) => {
+        app.put('/profiles/admin/:email', verifyJWT, async (req, res) => {
             const email = req.params.email;
             const filter = { email: email };
             const updateDoc = {
