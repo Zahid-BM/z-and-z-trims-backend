@@ -122,7 +122,6 @@ async function run() {
         app.get('/profiles', verifyJWT, async (req, res) => {
             const allProfiles = await profileCollection.find().toArray();
             res.send(allProfiles);
-
         });
         // add admin API
         app.put('/profiles/admin/:email', verifyJWT, async (req, res) => {
@@ -140,7 +139,14 @@ async function run() {
             else {
                 res.status(403).send({ message: 'Forbidden !!!' })
             }
+        });
 
+        // check whether the user is admin or not 
+        app.get('/admin/:email', async (req, res) => {
+            const email = req.params.email;
+            const user = await profileCollection.findOne({ email: email });
+            const isAdmin = user.role === 'admin';
+            res.send({ admin: isAdmin });
         });
 
 
