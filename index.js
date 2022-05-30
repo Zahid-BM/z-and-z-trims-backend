@@ -119,6 +119,23 @@ async function run() {
             const newProfile = await profileCollection.updateOne(filter, updateDoc, option)
             res.send(newProfile);
         });
+        // get all profiles from DB and send to client side make admin dashboard page
+        app.get('/profiles', async (req, res) => {
+            const allProfiles = await profileCollection.find().toArray();
+            res.send(allProfiles);
+
+        });
+
+
+
+
+
+
+
+
+
+
+
 
     }
     finally {
