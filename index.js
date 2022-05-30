@@ -148,6 +148,13 @@ async function run() {
             const isAdmin = user.role === 'admin';
             res.send({ admin: isAdmin });
         });
+        // get profiles id-wise and delete on remove button clicked from make an admin page in dashboard
+        app.delete('/profiles/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await profileCollection.deleteOne(query);
+            res.send(result);
+        });
 
 
 
