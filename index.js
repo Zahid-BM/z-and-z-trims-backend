@@ -22,7 +22,6 @@ function verifyJWT(req, res, next) {
         if (err) {
             return res.status(403).send({ message: 'Forbidden access' })
         }
-        console.log('decoded', decoded)
         req.decoded = decoded;
         next();
     })
@@ -120,7 +119,7 @@ async function run() {
             res.send(newProfile);
         });
         // get all profiles from DB and send to client side make admin dashboard page
-        app.get('/profiles', async (req, res) => {
+        app.get('/profiles', verifyJWT, async (req, res) => {
             const allProfiles = await profileCollection.find().toArray();
             res.send(allProfiles);
 
