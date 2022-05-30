@@ -160,18 +160,6 @@ async function run() {
             const totalOrders = await orderCollection.find().toArray();
             res.send(totalOrders);
         });
-
-
-
-
-
-
-
-
-
-
-
-
     }
     finally {
 
