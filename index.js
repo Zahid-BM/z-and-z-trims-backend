@@ -160,6 +160,19 @@ async function run() {
             const totalOrders = await orderCollection.find().toArray();
             res.send(totalOrders);
         });
+        // receive add a product request from client side in the add a product page  admin role, save into DB and then send response
+        app.post('/trims', async (req, res) => {
+            const item = req.body;
+            const newItem = await trimsCollection.insertOne(item);
+            res.send(newItem);
+        });
+        // get trims id-wise and delete on remove button clicked from manage items page in dashboard admin role
+        app.delete('/trims/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await trimsCollection.deleteOne(query);
+            res.send(result);
+        });
     }
     finally {
 
