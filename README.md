@@ -10,4 +10,4 @@ Client side code GitHub repo [Visit](https://github.com/programming-hero-web-cou
   * Admin Role implementation
 * Secured authorization using JWT (Json Web Token)
   * Mongodb database used
-  * User verified also in backend
+  * User verified also in backend.
