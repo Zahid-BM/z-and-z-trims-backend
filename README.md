@@ -2,7 +2,7 @@
 # Z&Z Trims Manufacturer
 
 Live website hosted in firebase [Visit Live website](https://garments-accessories.web.app/).
-Client side code GitHub repo [Visit](https://github.com/programming-hero-web-course1/manufacturer-website-client-side-Zahid-BM).
+Client side code GitHub repo [Visit](https://github.com/Zahid-BM/z-and-z-trims-full-stack-with-mern).
 
 # Short note
 
