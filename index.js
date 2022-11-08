@@ -182,7 +182,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Z&Z Server is running')
+    res.send('Z&Z Server is running from Render.com')
 });
 
 
